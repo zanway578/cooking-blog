@@ -1,4 +1,4 @@
-# A simple cooking blog in .NET
+# A Simple Cooking Blog in .NET
 
 ## Purpose
 Every time I go on a cooking blog site, I am bombarded with endless ads, messy UIs, and overly intense colors. This project is designed to be easy to deploy using Azure, quick to load, and easy to read.
