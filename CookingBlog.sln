@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBlog.Web", "CookingBlog.Web\CookingBlog.Web.csproj", "{66CDE6BD-442B-48B1-8B6A-4D31A5158FB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBlog.Database", "CookingBlog.Database\CookingBlog.Database.csproj", "{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66CDE6BD-442B-48B1-8B6A-4D31A5158FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66CDE6BD-442B-48B1-8B6A-4D31A5158FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66CDE6BD-442B-48B1-8B6A-4D31A5158FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66CDE6BD-442B-48B1-8B6A-4D31A5158FB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60A8C2DE-96D8-4EA0-AFD8-95EB82647ADA}
+	EndGlobalSection
+EndGlobal

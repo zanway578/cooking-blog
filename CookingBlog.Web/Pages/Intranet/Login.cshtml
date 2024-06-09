@@ -1,0 +1,34 @@
+﻿@page
+@model LoginModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Login";
+}
+
+<form asp-page-handler="Login">
+    <div class="container text-align-center" style="max-width: 600px;">
+        <div class="row">
+            <h2>Login</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input id="inUsername" name="username" type="text" placeholder="Username" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input id="inPassword" name="password" type="password" placeholder="Password" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input id="btnLoginSubmit" type="submit" value="Register" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="text-error">@Model.LoginMessage</label>
+            </div>
+        </div>
+    </div>
+</form>

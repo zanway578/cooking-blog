@@ -1,0 +1,32 @@
+﻿@page
+@model CookingBlog.Web.Pages.Intranet.Admin.Recipes.EditModel
+
+@{
+    ViewData["Title"] = "Edit Recipe";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .recipe-step {
+        padding: 5px;
+    }
+</style>
+
+<h1>Edit Recipe</h1>
+<label style="color: red;">@Model.StatusMessage</label>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @await Component.InvokeAsync("RecipeForm", Model.RecipeId)
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

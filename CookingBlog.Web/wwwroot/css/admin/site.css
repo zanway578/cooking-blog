@@ -1,0 +1,71 @@
+﻿label {
+    margin: 5px;
+}
+
+select {
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px grey;
+}
+
+input, textarea {
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px grey;
+    width: 85%;
+}
+
+    input[type=submit] {
+        background: #002aff;
+        color: white;
+    }
+
+        input[type=submit]:hover {
+            background: #00aaff;
+            color: black;
+        }
+
+button {
+    border-radius: 10px;
+    padding: 5px;
+    border: solid 1px grey;
+}
+
+    button:hover {
+        background: #00aaff;
+        color: black;
+    }
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-error {
+    color: red;
+}
+
+.table tr:nth-child(even) {
+    background: #EEE
+}
+
+.table tr:nth-child(odd) {
+    background: #FFF
+}
+
+.navbar-nav li {
+    padding: 5px;
+}
+
+.bordered-container {
+    background: #EEE;
+    border: solid 1px grey;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+}
+
+    .bordered-container .secondary {
+        background: #A1D08D
+    }

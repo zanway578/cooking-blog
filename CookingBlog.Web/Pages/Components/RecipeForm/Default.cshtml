@@ -1,0 +1,508 @@
+﻿@model Models.Recipe.RecipeForm
+<style>
+    .recipe-step {
+        padding: 5px;
+    }
+
+    .small-number-input {
+        width: 45px;
+        display: block;
+    }
+
+    .small-number-line {
+        width: 45px;
+        display: block;
+        border-bottom: 1px solid black
+    }
+</style>
+<form method="post" enctype="multipart/form-data">
+    <div class="bordered-container">
+        <div>
+            <h2>Basic Recipe Information</h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>Recipe Name</label>
+                    <br />
+                    <input type="text"
+                           name="recipe-name"
+                           placeholder="Recipe name"
+                           value="@Model.RecipeDataModel.Name"
+                           required />
+                </div>
+                <div class="col-lg-4">
+                    <label>Preparation Time (minutes)</label>
+                    <input type="number"
+                           name="prep-time"
+                           placeholder="10"
+                           value="@Model.RecipeDataModel.PrepTime"
+                           required />
+                </div>
+                <div class="col-lg-4">
+                    <label>Cook Time (minutes)</label>
+                    <input type="number"
+                           name="cook-time"
+                           placeholder="10"
+                           value="@Model.RecipeDataModel.CookTime"
+                           required />
+                </div>
+                <div class ="col-lg-4">
+                    <label>Number of Servings</label>
+                    <input type="number"
+                           name="number-servings"
+                           placeholder="8"
+                           value="@Model.RecipeDataModel.NumberServings"
+                           required />
+                </div>
+                <div class="col-lg-12">
+                    <label>Recipe Description</label>
+                    <textarea style="display: block;"
+                              name="recipe-description"
+                              placeholder="Description"
+                              required>@Model.RecipeDataModel.Description</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bordered-container">
+        <div>
+            <h2>Main recipe image</h2>
+            <p>This image will be shown on the recipe card.</p>
+        </div>
+        <div>
+            <input id="main-img" name="main-img" type="file" accept="@string.Join(", ", Model.AvailableFormats)" />
+            <label>Supported formats: @string.Join(", ", Model.AvailableFormats)</label>
+        </div>
+    </div>
+    <div class="bordered-container">
+        <div>
+            <h2>Recipe Groups</h2>
+        </div>
+        <div id="recipe-group-container">
+            @foreach (var group in Model.RecipeDataModel.RecipeGroups)
+            {
+                <div id="recipe-group-@group.GroupNumber" class="bordered-container secondary">
+                    <div>
+                        <h2>Recipe Group</h2>
+                        <p>Ingredients and steps for part of the recipe</p>
+                    </div>
+                    <div>
+                        <label>Recipe Name</label>
+                        <input name="group-name-@group.GroupNumber"
+                               value="@group.Name"
+                        />
+                    </div>
+                    <div class="bordered-container">
+                        <div>
+                            <h2>Ingredients</h2>
+                        </div>
+                        <div id="ingredients-container-@group.GroupNumber">
+                            @{
+                                for (var i = 0; i < group.Ingredients.Count; i++)
+                                {
+                                    var ingredientNum = i + 1;
+                                    var ingredient = group.Ingredients[i];
+
+                                        <div class="ingredient-step">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Ingredient Name</label>
+                                                        <input type="text" id="ingredient-@group.GroupNumber-@ingredientNum"
+                                                               list="ingredient-datalist-@group.GroupNumber-@ingredientNum"
+                                                               name="ingredient-@group.GroupNumber-@ingredientNum"
+                                                               value="@ingredient.Name"
+                                                               onkeyup="populateIngredientDataList(@group.GroupNumber, @ingredientNum)" />
+                                                        <datalist id="ingredient-datalist-@group.GroupNumber-@ingredientNum">
+                                                        </datalist>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label>Amount</label>
+                                                        <div style="display: flex;">
+                                                            <div>
+                                                                <input type="number"
+                                                                       id="ingredient-amount-@group.GroupNumber-@ingredientNum"
+                                                                       name="ingredient-amount-@group.GroupNumber-@ingredientNum"
+                                                                       value="@ingredient.Amount" />
+                                                            </div>
+                                                            <div>
+                                                                <div style="display: block">
+                                                                    <input type="number"
+                                                                           class="small-number-input"
+                                                                           id="ingredient-amount-numerator-@group.GroupNumber-@ingredientNum"
+                                                                           name="ingredient-amount-numerator-@group.GroupNumber-@ingredientNum"
+                                                                           value="@ingredient.AmountNumerator" />
+                                                                </div>
+                                                                <div class="small-number-line"></div>
+                                                                <div style="display: block">
+                                                                    <input type="number"
+                                                                           class="small-number-input"
+                                                                           id="ingredient-amount-denominator-@group.GroupNumber-@ingredientNum"
+                                                                           name="ingredient-amount-denominator-@group.GroupNumber-@ingredientNum"
+                                                                           value="@ingredient.AmountDenominator" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label>Unit</label>
+                                                        <select id="ingredient-measurement-@group.GroupNumber-@ingredientNum"
+                                                                name="ingredient-measurement-@group.GroupNumber-@ingredientNum"
+                                                                style="display: flex;">
+                                                            @foreach (var measurement in Model.AvailableMeasurements)
+                                                        {
+                                                                <option selected="@(measurement.Id == ingredient.MeasurementId)"
+                                                                        value="@measurement.Id">@measurement.Name (@measurement.UnitName)</option>
+                                                        }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                }
+                            }
+                        </div>
+                        <div>
+                            <button onclick="addNewIngredient(@group.GroupNumber);" type="button">Add Ingredient</button>
+                        </div>
+                    </div>
+                    <div class="bordered-container">
+                        <div>
+                            <h2>Recipe Steps</h2>
+                        </div>
+                        <div id="steps-container-@group.GroupNumber">
+                            @{
+                                for (var i = 0; i < group.RecipeSteps.Count; i++)
+                                {
+                                    var recipeStepNum = i + 1;
+                                    var recipeStep = group.RecipeSteps[i];
+
+                                        <div class="recipe-step">
+                                            <label>@recipeStepNum</label>
+                                            <textarea id="recipe-step-@group.GroupNumber-@recipeStepNum" name="recipe-step-@group.GroupNumber-@recipeStepNum">@recipeStep.StepText</textarea>
+                                        </div>
+                                }
+                            }
+                        </div>
+                        <div>
+                            <button onclick="addNewRecipeStep(@group.GroupNumber);" type="button">Add Step</button>
+                        </div>
+                    </div>
+                </div>
+                }
+        </div>
+        <div>
+            <button onclick="addNewRecipeGroup();" type="button">Add New Recipe</button>
+        </div>
+    </div>
+    <div class="bordered-container">
+        <div>
+            <h2>Recipe Story</h2>
+        </div>
+        <div id="story-container">
+            @{
+                for (var i = 0; i < Model.RecipeDataModel.Story.Count; i++)
+                {
+                    var recipeStoryNum = i + 1;
+                    var recipeStory = Model.RecipeDataModel.Story[i];
+
+                        <div class="story-step">
+                            <textarea id="recipe-story-@recipeStoryNum" name="recipe-story-@recipeStoryNum">@recipeStory.StoryText</textarea>
+                        </div>
+                }
+            }
+        </div>
+        <div>
+            <button onclick="addNewRecipeStoryParagraph();" type="button">Add Paragraph</button>
+        </div>
+    </div>
+    
+    <div class="bordered-container">
+        <div>
+            <h2>Notes</h2>
+        </div>
+        <div id="notes-container">
+            @{
+                for (var i = 0; i < Model.RecipeDataModel.Notes.Count; i++)
+                {
+                    var noteNum = i + 1;
+                    var note = Model.RecipeDataModel.Notes[i];
+
+                        <div>
+                            <label>@noteNum</label>
+                            <textarea id="recipe-note-@noteNum" name="recipe-note-@noteNum">@note.NoteText</textarea>
+                        </div>
+                }
+            }
+        </div>
+        <div>
+            <button onclick="addNewNote();" type="button">Add Note</button>
+        </div>
+    </div>
+    <div class="bordered-container">
+        <div>
+            <h2>Tags</h2>
+        </div>
+        <div id="tags-container">
+            @{
+                for (var i = 0; i < Model.RecipeDataModel.Tags.Count; i++)
+                {
+                    var tag = Model.RecipeDataModel.Tags[i];
+                    var tagNum = i + 1;
+
+                        <div class="tag">
+                            <input type="text"
+                                   id="tag-@tagNum"
+                                   list="tag-datalist-@tagNum"
+                                   name="tag-@tagNum"
+                                   value="@tag.Name"
+                                   onkeyup="populateTagDataList(@tagNum)" />
+                            <datalist id="tag-datalist-@tagNum">
+                            </datalist>
+                        </div>
+                }
+            }
+
+        </div>
+        <div>
+            <button onclick="addNewTag();" type="button">Add Tag</button>
+        </div>
+    </div>
+    <div class="bordered-container">
+        <div>
+            <h2>Is Recipe Visible?</h2>
+            <p>
+                If you want to save your progress on this recipe but don't want it to be visible on the site
+                make sure this check box is <i>unchecked</i>.
+            </p>
+        </div>
+        <div>
+            <input type="checkbox" id="recipe-available" name="recipe-available" value="checkPublish" />
+        </div>
+    </div>
+    <div>
+        @{ var saveName = Model.RecipeId == null ? "Add Recipe" : "Save Recipe"; }
+        <button type="submit">@saveName</button>
+    </div>
+</form>
+<script>
+    async function populateIngredientMeasurementList(groupNumber, ingredientNum) {
+        const measurementList = document.getElementById(`ingredient-measurement-${groupNumber}-${ingredientNum}`);
+
+        console.log(`Measurement list id: 'ingredient-measurement-${groupNumber}-${ingredientNum}'`);
+
+        let response = await axios.get("/api/measurement");
+        let measurements = response.data;
+
+        console.log(JSON.stringify(measurements));
+
+        measurementList.innerHTML = "";
+
+        measurements.forEach(m => {
+            measurementList.innerHTML += `<option value="${m.value}">${m.name}</option>`;
+        })
+    }
+
+    async function populateTagDataList(ingredientNum) {
+        let searchText = document.getElementById(`tag-${ingredientNum}`).value;
+
+        const params = { searchText: searchText };
+
+        let response = await axios.get("/api/tag/search", { params });
+        let tags = response.data;
+
+        let dataList = document.getElementById(`tag-datalist-${ingredientNum}`);
+
+        dataList.innerHTML = "";
+
+        tags.forEach(tag => {
+            dataList.innerHTML += `<option value="${tag}"></option>`;
+        });
+    }
+
+    async function populateIngredientDataList(groupNumber, ingredientNum) {
+        let searchText = document.getElementById(`ingredient-${groupNumber}-${ingredientNum}`).value;
+
+        const params = { searchText: searchText };
+
+        let response = await axios.get("/api/ingredient/search", { params });
+        let ingredients = response.data;
+
+        let dataList = document.getElementById(`ingredient-datalist-${groupNumber}-${ingredientNum}`);
+
+        dataList.innerHTML = "";
+
+        ingredients.forEach(ingredient => {
+            dataList.innerHTML += `<option value="${ingredient}"></option>`;
+        });
+    }
+
+    function getNewStepToAdd(prependTemplate) {
+        let stepToAdd = 1;
+
+        while (true) {
+            let elem = document.getElementById(`${prependTemplate}${stepToAdd}`);
+
+            if (elem === null) {
+                break;
+            }
+            else {
+                stepToAdd += 1;
+            }
+        }
+
+        return stepToAdd;
+    }
+
+    function addNewRecipeStoryParagraph() {
+        let paragraphToAdd = getNewStepToAdd("recipe-story-");
+
+        let storyContainer = document.getElementById("story-container");
+
+        storyContainer.insertAdjacentHTML("beforeend",
+            `<div class="story-step">
+                <textarea id="recipe-story-${paragraphToAdd}" name="recipe-story-${paragraphToAdd}"></textarea>
+            </div>`
+        );
+    }
+
+    function addNewRecipeGroup() {
+        let groupToAdd = getNewStepToAdd("recipe-group-");
+
+        let container = document.getElementById("recipe-group-container");
+
+        container.insertAdjacentHTML("beforeend",
+            `<div id="recipe-group-${groupToAdd}" class="bordered-container secondary">
+                <div>
+                    <h2>Recipe Group</h2>
+                    <p>Ingredients and steps for part of the recipe</p>
+                </div>
+                <div>
+                    <label>Recipe Name</label>
+                    <input name="group-name-${groupToAdd}"
+                    />
+                </div>
+                <div class="bordered-container">
+                    <div>
+                        <h2>Ingredients</h2>
+                    </div>
+                    <div id="ingredients-container-${groupToAdd}">
+                    </div>
+                    <div>
+                        <button onclick="addNewIngredient(${groupToAdd});" type="button">Add Ingredient</button>
+                    </div>
+                </div>
+                <div class="bordered-container">
+                    <div>
+                        <h2>Recipe Steps</h2>
+                    </div>
+                    <div id="steps-container-${groupToAdd}"></div>
+                    <div>
+                        <button onclick="addNewRecipeStep(${groupToAdd});" type="button">Add Step</button>
+                    </div>
+                </div>
+            `);
+    }
+
+    function addNewIngredient(groupNumber) {
+        let ingredientToAdd = getNewStepToAdd(`ingredient-${groupNumber}-`);
+
+        let ingredientsContainer = document.getElementById(`ingredients-container-${groupNumber}`);
+
+        ingredientsContainer.insertAdjacentHTML("beforeend",
+            `<div class="ingredient-step">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Ingredient Name</label>
+                                    <input type="text" id="ingredient-${groupNumber}-${ingredientToAdd}"
+                                        list="ingredient-datalist-${groupNumber}-${ingredientToAdd}"
+                                        name="ingredient-${groupNumber}-${ingredientToAdd}"
+                                        onkeyup="populateIngredientDataList(${groupNumber},${ingredientToAdd})" />
+                                    <datalist id="ingredient-datalist-${groupNumber}-${ingredientToAdd}">
+                                </datalist>
+                            </div>
+                            <div class="col-md-5">
+                                <label>Amount</label>
+                                <div style="display: flex;">
+                                    <div>
+                                        <input type="number"
+                                            id="ingredient-amount-${groupNumber}-${ingredientToAdd}"
+                                            name="ingredient-amount-${groupNumber}-${ingredientToAdd}"
+                                            />
+                                    </div>
+                                    <div>
+                                        <div style="display: block">
+                                            <input type="number"
+                                                class="small-number-input"
+                                                id="ingredient-amount-numerator-${groupNumber}-${ingredientToAdd}"
+                                                name="ingredient-amount-numerator-${groupNumber}-${ingredientToAdd}"
+                                                />
+                                        </div>
+                                        <div class="small-number-line"></div>
+                                            <div style="display: block">
+                                                <input type="number"
+                                                    class="small-number-input"
+                                                    id="ingredient-amount-denominator-${groupNumber}-${ingredientToAdd}"
+                                                    name="ingredient-amount-denominator-${groupNumber}-${ingredientToAdd}"
+                                                 />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-md-2">
+                                <label>Unit</label>
+                                    <select id="ingredient-measurement-${groupNumber}-${ingredientToAdd}"
+                                            name="ingredient-measurement-${groupNumber}-${ingredientToAdd}"
+                                            style="display: flex;">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+        populateIngredientMeasurementList(groupNumber, ingredientToAdd);
+    }
+
+    function addNewRecipeStep(groupNumber) {
+        let stepToAdd = getNewStepToAdd(`recipe-step-${groupNumber}-`);
+
+        let stepsContainer = document.getElementById(`steps-container-${groupNumber}`);
+
+        stepsContainer.insertAdjacentHTML("beforeend",
+            `<div class="recipe-step">
+                <label>${stepToAdd}.</label>
+                <textarea id="recipe-step-${groupNumber}-${stepToAdd}" name="recipe-step-${groupNumber}-${stepToAdd}"></textarea>
+            </div>`);
+    }
+
+    function addNewNote() {
+        let stepToAdd = getNewStepToAdd("recipe-note-");
+
+        let notesContainer = document.getElementById("notes-container");
+
+        notesContainer.insertAdjacentHTML("beforeend",
+            `<div>
+                    <label>${stepToAdd}</label>
+                    <textarea id="recipe-note-${stepToAdd}" name="recipe-note-${stepToAdd}"></textarea>
+                </div>`);
+    }
+
+    function addNewTag() {
+        let stepToAdd = getNewStepToAdd("tag-");
+        let tagContainer = document.getElementById("tags-container");
+
+        tagContainer.insertAdjacentHTML("beforeend",
+            `<div class="tag">
+                    <input type="text"
+                        id="tag-${stepToAdd}"
+                        list="tag-datalist-${stepToAdd}"
+                        name="tag-${stepToAdd}"
+                        onkeyup="populateTagDataList(${stepToAdd})" />
+                    <datalist id="tag-datalist-${stepToAdd}">
+                    </datalist>
+                </div>
+                `);
+    }
+</script>

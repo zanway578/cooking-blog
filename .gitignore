@@ -1,0 +1,18 @@
+## ide files
+.vs/
+*suo
+*cache
+*user
+
+## build files
+**bin/
+**obj/
+
+## publish files, local launch settings
+*.pubxml
+*.PublishSettings
+**Properties/
+.config
+
+## files containing sensitive info
+appsettings*.json
