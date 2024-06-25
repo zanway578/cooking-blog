@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\usda-fdc-api-dotnet\Usda.Fdc.Api\Usda.Fdc.Api.csproj" />
     <ProjectReference Include="..\CookingBlog.Database\CookingBlog.Database.csproj" />
   </ItemGroup>
 

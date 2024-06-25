@@ -1,0 +1,38 @@
+﻿@using CookingBlog.Database.Views
+
+@model VRecipePreview
+
+<style>
+    .recipe-preview {
+        background: #EEE;
+        border: solid 1px grey;
+        border-radius: 5px;
+        margin: 10px;
+        padding: 5px;
+        width: 250px;
+    }
+
+        .recipe-preview .img-container {
+            text-align: center;
+        }
+
+        .recipe-preview img {
+            width: 50%;
+           text-align: center;
+
+        }
+
+        .recipe-preview a {
+            color: black;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    
+</style>
+<div class="recipe-preview">
+    <div class="img-container">
+        <img src="/api/media/recipe/@Model.FileName" />
+    </div>    
+    <a href="/recipe/@Model.Name/@Model.RecipeId">@Model.Name</a>
+    <p>@Model.Description</p>
+</div>

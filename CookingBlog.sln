@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBlog.Web", "CookingB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBlog.Database", "CookingBlog.Database\CookingBlog.Database.csproj", "{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Usda.Fdc.Api", "..\..\usda-fdc-api-dotnet\Usda.Fdc.Api\Usda.Fdc.Api.csproj", "{5B410310-3242-4F1A-85A6-AC18094F4E93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B410310-3242-4F1A-85A6-AC18094F4E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B410310-3242-4F1A-85A6-AC18094F4E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B410310-3242-4F1A-85A6-AC18094F4E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B410310-3242-4F1A-85A6-AC18094F4E93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

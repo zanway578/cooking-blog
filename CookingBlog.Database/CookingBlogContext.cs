@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using CookingBlog.Database.Models;
 using CookingBlog.Database.Models.Views;
+using CookingBlog.Database.Views;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,8 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
     public virtual DbSet<Tag> Tags { get; set; }
 
     public virtual DbSet<VRecipeGroupIngredient> VRecipeGroupIngredients { get; set; }
+
+    public virtual DbSet<VRecipePreview> VRecipePreviews { get; set; }
 
     public virtual DbSet<VRecipeTag> VRecipeTags { get; set; }
 
@@ -338,6 +341,12 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
         modelBuilder.Entity<VRecipeGroupIngredient>(entity =>
         {
             entity.ToView("v_recipe_ingredient");
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<VRecipePreview>(entity =>
+        {
+            entity.ToView("v_recipe_preview");
             entity.HasNoKey();
         });
 

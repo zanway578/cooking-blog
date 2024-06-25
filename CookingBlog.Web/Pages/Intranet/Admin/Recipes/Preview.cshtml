@@ -79,7 +79,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <h1 class="recipe-header">@Model.Recipe.Name</h1>
 
             <div>
@@ -152,7 +152,9 @@
                                 if (ingredient.MeasurementAmountNumerator != null && ingredient.MeasurementAmountDenominator != null)
                                 {
                                     <li>
-                                        @ingredient.MeasurementAmount
+                                        @if (@ingredient.MeasurementAmount != 0) { 
+                                            <span>@ingredient.MeasurementAmount</span> 
+                                        }
                                         <span>@ingredient.MeasurementAmountNumerator/@ingredient.MeasurementAmountDenominator</span>
 
                                         @ingredient.MeasurementUnitName @ingredient.IngredientName
@@ -199,7 +201,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4 col-md-12">
             @if (Model.Author.Bio != null)
             {
                 <div class="bio-container">
@@ -209,6 +211,21 @@
                     </p>
                 </div>
             }
+            <div>
+                <div style="text-align: center;">
+                    <h2>More Recipes</h2>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        @foreach (var preview in Model.Previews)
+                        {
+                            <div class="col-lg-12 col-md-4 d-flex justify-content-center">
+                                <partial name="_RecipePreview" model="preview" />
+                            </div>     
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

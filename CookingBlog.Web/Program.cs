@@ -1,10 +1,13 @@
 using CookingBlog.Database;
 using CookingBlog.Database.Models;
+using CookingBlog.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Configuration;
+using System.Configuration;
+using Usda.Fdc.Api;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("CookingBlogContextConnection") ?? throw new InvalidOperationException("Connection string 'CookingBlogContextConnection' not found.");
 
 // Add services to the container.
 
@@ -14,12 +17,20 @@ builder.Services.AddRazorPages(options =>
 });
 builder.Services.AddControllers();
 
+builder.Services.Configure<CookingBlogSettings>(builder.Configuration.GetSection("CookingBlogSettings"));
+
 builder.Services.AddDbContext<CookingBlogContext>(options => options.UseSqlServer());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-CookingBlogContext.GlobalConnectionString = connectionString;
+// Used with FDC client
+builder.Services.AddSingleton<HttpClient>();
+
+var settings = builder.Configuration.GetSection("CookingBlogSettings").Get<CookingBlogSettings>();
+
+CookingBlogContext.GlobalConnectionString = settings.ConnectionString;
+FdcClient.GlobalApiKey = settings.FdcKey;
 
 builder.Services.AddIdentity<IdentityApplicationUser, IdentityApplicationRole>(options =>
 {

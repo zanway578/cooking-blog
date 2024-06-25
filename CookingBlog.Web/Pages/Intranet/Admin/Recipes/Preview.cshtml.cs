@@ -2,6 +2,7 @@ using CookingBlog.Database;
 using CookingBlog.Database.Models;
 using CookingBlog.Database.Models.Enums;
 using CookingBlog.Database.Models.Views;
+using CookingBlog.Database.Views;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,8 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Recipes
         public string? MainImgUrl { get; set; }
 
         public byte[] Image { get; set; }
+
+        public List<VRecipePreview> Previews { get; set; }
 
         public IActionResult OnGet()
         {
@@ -84,6 +87,12 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Recipes
                 {
                     MainImgUrl = $"/api/media/recipe-header-gallery/{fileName}";
                 }
+
+                Previews = _ctx
+                    .VRecipePreviews
+                    .Where(p => p.RecipeId != RecipeId)
+                    .Take(3)
+                    .ToList();
 
                 return Page();
             }
