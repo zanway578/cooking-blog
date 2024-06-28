@@ -1,8 +1,8 @@
-﻿@*
+﻿@using CookingBlog.Web.Models.Ingredient
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+@model IngredientFormData
 <div>
     <form method="post">
         <div class="container">
@@ -12,15 +12,18 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12">
                     <label for="ingredient-name">Name</label>
-                    <input id="ingredient-name" name="ingredient-name" class="form-control" required />
+                    <input id="ingredient-name" name="ingredient-name" 
+                        class="form-control" required value="@Model.Name" />
                 </div>
                 <div class="col-md-3 col-sm-12">
                     <label for="calories-in-hundred-grams">Calories in 100g</label>
-                    <input id="calories-in-hundred-grams" name="calories-in-hundred-grams" class="form-control" required />
+                    <input id="calories-in-hundred-grams" name="calories-in-hundred-grams"
+                        class="form-control" required value="@Model.CaloriesInOneHundredGrams" />
                 </div>
                 <div class="col-md-3 col-sm-12">
                     <label for="grams-in-cup">How many Grams in Cup</label>
-                    <input id="grams-in-cup" name="grams-in-cup" class="form-control" />
+                    <input id="grams-in-cup" name="grams-in-cup" class="form-control"
+                           value="@Model.NumberGramsInACup" />
                 </div>
             </div>
             <div class="row">
@@ -40,6 +43,24 @@
                             </tr>
                         </thead>
                         <tbody id="nutrient-table-body">
+                            @{
+                                var counter = 1;
+                                foreach(var n in Model.NutrientFormData)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input name="nutrient-name-@counter" class="form-control" value="@n.NutrientName" />
+                                        </td>
+                                        <td>
+                                            <input name="nutrient-amount-@counter" class="form-control" value="@n.Amount" />
+                                        </td>
+                                        <td>
+                                            <input name="nutrient-unit-@counter" class="form-control" value="@n.UnitName" />
+                                        </td>
+                                    </tr>
+                                    counter++;
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -47,7 +68,7 @@
             <div class="row">
                 <div class="col-2">
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </div>
             </div>

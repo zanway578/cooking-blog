@@ -13,7 +13,37 @@ namespace CookingBlog.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(Guid? ingredientId)
         {
-            return View(null);
+            var model = new IngredientFormData();
+
+            if (ingredientId != null)
+            {
+                var ingredient = _ctx
+                    .Ingredients
+                    .Where(i => i.Id == ingredientId.Value)
+                    .First();
+
+
+                var nutrients = _ctx
+                    .VIngredientNutrients
+                    .Where(n => n.IngredientId == ingredientId.Value)
+                    .Select(n => new IngredientNutrientFormData
+                    {
+                        NutrientName = n.NutrientName,
+                        Amount = n.NutrientAmount,
+                        UnitName = n.NutrientMeasurement
+                    })
+                    .ToList();
+
+                model = new IngredientFormData
+                {
+                    Name = ingredient.Name,
+                    CaloriesInOneHundredGrams = ingredient.CaloriesInOneHundredGrams,
+                    NumberGramsInACup = ingredient.NumberGramsInACup,
+                    NutrientFormData = nutrients
+                };
+            }
+
+            return View(model);
         }
 
         public static IngredientFormData BuildFormModel(IFormCollection form)

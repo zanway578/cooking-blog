@@ -58,6 +58,8 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
 
     public virtual DbSet<Tag> Tags { get; set; }
 
+    public virtual DbSet<VIngredientNutrient> VIngredientNutrients { get; set; }
+
     public virtual DbSet<VRecipeGroupIngredient> VRecipeGroupIngredients { get; set; }
 
     public virtual DbSet<VRecipePreview> VRecipePreviews { get; set; }
@@ -336,6 +338,12 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
                 .HasDefaultValueSql("(newid())")
                 .HasColumnName("ID");
             entity.Property(e => e.Name).HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<VIngredientNutrient>(entity =>
+        {
+            entity.ToView("v_ingredient_nutrient");
+            entity.HasNoKey();
         });
 
         modelBuilder.Entity<VRecipeGroupIngredient>(entity =>

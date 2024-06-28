@@ -28,6 +28,8 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
                 return NotFound();
             }
 
+            IngredientId = id.Value;
+
             return Page();
         }
 
@@ -47,7 +49,7 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
             {
                 var model = IngredientFormViewComponent.BuildFormModel(Request.Form);
 
-                new IngredientSaver(IngredientId, model, _context);
+                new IngredientSaver(IngredientId, model, _context).SaveIngredient();
             }
             catch (Exception ex)
             {
