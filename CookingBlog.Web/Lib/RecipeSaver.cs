@@ -8,14 +8,14 @@ using System.Security.Claims;
 
 namespace CookingBlog.Web.Lib
 {
-    public class RecipeSaver (Guid? recipeId, RecipeFormData recipeFormData, CookingBlogContext ctx, UserManager<IdentityApplicationUser> UserManager, ClaimsPrincipal User)
+    public class RecipeSaver(Guid? recipeId, RecipeFormData recipeFormData, CookingBlogContext ctx, UserManager<IdentityApplicationUser> UserManager, ClaimsPrincipal User)
     {
         private Guid? _recipeId = recipeId;
         private readonly RecipeFormData _recipeDataModel = recipeFormData;
         private readonly CookingBlogContext _ctx = ctx;
         private readonly UserManager<IdentityApplicationUser> _userManager = UserManager;
         private readonly ClaimsPrincipal _user = User;
-        
+
 
         public void SaveRecipe()
         {
@@ -76,7 +76,7 @@ namespace CookingBlog.Web.Lib
                     );
 
                 var recipeSteps = new List<RecipeGroupStep>();
-                
+
                 // TODO: fix
 
                 foreach (var group in _recipeDataModel.RecipeGroups)

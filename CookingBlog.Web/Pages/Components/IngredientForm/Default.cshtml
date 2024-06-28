@@ -1,0 +1,138 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div>
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <h2>Ingredient Info</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <label for="ingredient-name">Name</label>
+                    <input id="ingredient-name" name="ingredient-name" class="form-control" required />
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <label for="calories-in-hundred-grams">Calories in 100g</label>
+                    <input id="calories-in-hundred-grams" name="calories-in-hundred-grams" class="form-control" required />
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <label for="grams-in-cup">How many Grams in Cup</label>
+                    <input id="grams-in-cup" name="grams-in-cup" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-8">
+                    <button type="button" class="btn btn-primary" onclick="SearchFoods()">Search FDC Ingredients</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Nutrients</h2>
+                    <table id="nutrients-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nutrient-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <table id="nutrient-select-table" class="table">
+    </table>
+</div>
+<script>
+    async function SearchFoods() {
+        let searchQuery = document.getElementById("ingredient-name").value;
+
+        console.log(`Search query is ${searchQuery}`);
+
+        let searchCriteria = {
+            query: searchQuery,
+            dataType: [],
+            pageSize: 5,
+            pageNumber: 1,
+            sortBy: null,
+            sortOrder: null,
+            brandOwner: null,
+            tradeChannel: [],
+            startDate: null,
+            endDate: null
+        }
+
+        let results = await axios.post("/api/ingredient/search/nutrients", searchCriteria);
+
+        let ingredientTable = document.getElementById("nutrient-select-table");
+
+        let tableInnerHtml = `
+                <thead>
+                    <tr>
+                        <th>Name / Description</th>
+                        <th>Data Set</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+            `
+
+        results.data.foods.forEach(f => {
+            tableInnerHtml += `
+                    <tr>
+                        <td>${f.description}</td>
+                        <td>${f.dataType}</td>
+                        <td><button class="btn btn-primary" onclick="generateNutrients(${f.fdcId})">Generate Nutrients</button></td>
+                    </tr>
+                `;
+        });
+
+        tableInnerHtml += "</tbody>";
+
+        ingredientTable.innerHTML = tableInnerHtml;
+
+    }
+
+    async function generateNutrients(fdcId) {
+        let results = await axios.get(`/api/ingredient/nutrients/${fdcId}`);
+        let table = document.getElementById("nutrient-table-body");
+
+        let tableHtml = "";
+        let counter = 1;
+
+        results.data.forEach(n => {
+            tableHtml += `
+                    <tr>
+                        <td>
+                            <input name="nutrient-name-${counter}" class="form-control" value="${n.name}"" />
+                        </td>
+                        <td>
+                            <input name="nutrient-amount-${counter}" class="form-control" value="${n.amount}" />
+                        </td>
+                        <td>
+                            <input name="nutrient-unit-${counter}" class="form-control" value="${n.unitName}" />
+                        </td>
+                    </tr>
+                `;
+
+            counter++;
+        });
+
+        table.innerHTML = tableHtml;
+    }
+</script>

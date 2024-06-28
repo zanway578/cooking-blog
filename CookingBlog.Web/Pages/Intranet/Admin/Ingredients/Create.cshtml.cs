@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CookingBlog.Database;
 using CookingBlog.Database.Models;
+using CookingBlog.Web.ViewComponents;
 
 namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
 {
     public class CreateModel : PageModel
     {
-        private readonly CookingBlog.Database.CookingBlogContext _context;
+        private readonly CookingBlog.Database.CookingBlogContext _ctx;
 
         public CreateModel(CookingBlog.Database.CookingBlogContext context)
         {
-            _context = context;
+            _ctx = context;
         }
 
         public IActionResult OnGet()
@@ -24,21 +25,13 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
             return Page();
         }
 
-        [BindProperty]
-        public CookingBlog.Database.Models.Ingredient Ingredient { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            var formData = IngredientFormViewComponent.BuildFormModel(Request.Form, _ctx);
 
-            _context.Ingredients.Add(Ingredient);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            throw new NotImplementedException();
         }
     }
 }
