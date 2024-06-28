@@ -8,7 +8,7 @@ namespace CookingBlog.Web.ViewComponents
 {
     public class IngredientFormViewComponent(CookingBlogContext context, UserManager<IdentityApplicationUser> userManager) : ViewComponent
     {
-        private readonly CookingBlogContext Context = context;
+        private readonly CookingBlogContext _ctx = context;
         public readonly UserManager<IdentityApplicationUser> UserManager = userManager;
 
         public async Task<IViewComponentResult> InvokeAsync(Guid? ingredientId)
@@ -16,15 +16,22 @@ namespace CookingBlog.Web.ViewComponents
             return View(null);
         }
 
-        public static IngredientFormData BuildFormModel(IFormCollection form, CookingBlogContext ctx)
+        public static IngredientFormData BuildFormModel(IFormCollection form)
         {
             try
             {
                 var name = form["ingredient-name"].First();
-                var calInHundredGrams = int.Parse(form["calories-in-hundred-grams"].First());
-                var gramsInCup = int.Parse(form["grams-in-cup"].First());
-
+                int? gramsInCup = null; 
                 var nutrients = new List<IngredientNutrientFormData>();
+                int calInHundredGrams = int.Parse(form["calories-in-hundred-grams"].First());
+
+                try
+                {
+                    gramsInCup = int.Parse(form["grams-in-cup"].First());
+                    
+                }
+                catch { }
+                
 
                 try
                 {
@@ -44,7 +51,7 @@ namespace CookingBlog.Web.ViewComponents
                 {
                     Name = name,
                     CaloriesInOneHundredGrams = calInHundredGrams,
-                    HowManyGramsInACup = gramsInCup,
+                    NumberGramsInACup = gramsInCup,
                     NutrientFormData = nutrients
                 };
             }

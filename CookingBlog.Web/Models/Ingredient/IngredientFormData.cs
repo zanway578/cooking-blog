@@ -6,7 +6,7 @@
 
         public int CaloriesInOneHundredGrams { get; set; }
 
-        public int? HowManyGramsInACup { get; set; }
+        public int? NumberGramsInACup { get; set; }
 
         public List<IngredientNutrientFormData> NutrientFormData { get; set; } = null!;
     }

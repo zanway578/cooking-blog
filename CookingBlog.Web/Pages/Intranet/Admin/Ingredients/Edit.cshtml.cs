@@ -8,20 +8,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingBlog.Database;
 using CookingBlog.Database.Models;
+using CookingBlog.Web.ViewComponents;
+using CookingBlog.Web.Lib;
 
 namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
 {
-    public class EditModel : PageModel
+    public class EditModel(CookingBlogContext ctx) : PageModel
     {
-        private readonly CookingBlog.Database.CookingBlogContext _context;
+        public Guid IngredientId { get; set; }
 
-        public EditModel(CookingBlog.Database.CookingBlogContext context)
-        {
-            _context = context;
-        }
+        public string StatusMessage { get; set; }
 
-        [BindProperty]
-        public CookingBlog.Database.Models.Ingredient Ingredient { get; set; } = default!;
+        private readonly CookingBlogContext _context = ctx;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -30,12 +28,6 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
                 return NotFound();
             }
 
-            var ingredient =  await _context.Ingredients.FirstOrDefaultAsync(m => m.Id == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-            Ingredient = ingredient;
             return Page();
         }
 
@@ -43,27 +35,25 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            IngredientId = new Guid(HttpContext.Request.Query["id"]);
+
             if (!ModelState.IsValid)
             {
+                StatusMessage = "Invalid model state.";
                 return Page();
             }
 
-            _context.Attach(Ingredient).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                var model = IngredientFormViewComponent.BuildFormModel(Request.Form);
+
+                new IngredientSaver(IngredientId, model, _context);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!IngredientExists(Ingredient.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                StatusMessage = ex.Message;
+
+                return Page();
             }
 
             return RedirectToPage("./Index");
