@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using Usda.Fdc.Api;
 using Usda.Fdc.Api.Models;
@@ -10,7 +11,7 @@ namespace CookingBlog.Web.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class IngredientController(CookingBlogContext ctx, HttpClient client) : ControllerBase
     {
         private CookingBlogContext _ctx = ctx;
@@ -33,11 +34,18 @@ namespace CookingBlog.Web.API
         [Route("search/nutrients")]
         public async Task<SearchResult> SearchIngredients(FoodSearchCriteria criteria)
         {
-            var apiClient = new FdcClient(_client);
+            try
+            {
+                var apiClient = new FdcClient(_client);
 
-            var results = await apiClient.SearchFoods(criteria);
+                var results = await apiClient.SearchFoods(criteria);
 
-            return results;
+                return results;
+            }         
+            catch (Exception ex) {
+                var temp = "";
+                throw ex;
+            }
         }
 
         [HttpGet]
@@ -46,9 +54,24 @@ namespace CookingBlog.Web.API
         {
             var apiClient = new FdcClient(_client);
 
-            var results = await apiClient.GetAbridgedFood(fdcId);
 
-            return results.FoodNutrients; 
+            try
+            {
+                var results = await apiClient.GetAbridgedFood(fdcId);
+
+                var filteredResults = results
+                    .FoodNutrients
+                    .Where(r => r.Amount > 0)
+                    .OrderBy(r => r.Name);
+
+                return filteredResults;
+            }
+            catch (Exception ex)
+            {
+                var temp = "";
+                throw ex;
+            }
+            
         }
     }
 }

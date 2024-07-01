@@ -44,8 +44,6 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Recipes
 
             try
             {
-                var f = Request.Form.Files;
-
                 var model = RecipeFormViewComponent.BuildFormModel(Request.Form, _ctx);
 
                 new RecipeSaver(RecipeId, model, _ctx, _userManager, User).SaveRecipe();

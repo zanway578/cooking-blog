@@ -9,7 +9,7 @@ namespace CookingBlog.Web.Lib
     {
         private Guid? _recipeId { get; set; }
 
-        private CookingBlogContext _ctx {  get; set; }
+        private CookingBlogContext _ctx { get; set; }
 
         public RecipeModelBuilder(Guid? recipeId, CookingBlogContext ctx)
         {
@@ -73,7 +73,8 @@ namespace CookingBlog.Web.Lib
 
             foreach (var group in groups)
             {
-                data.Add(new RecipeGroupFormData {
+                data.Add(new RecipeGroupFormData
+                {
                     Name = group.Name,
                     GroupNumber = group.GroupNumber,
                     Ingredients = GetIngredients(group.Id),

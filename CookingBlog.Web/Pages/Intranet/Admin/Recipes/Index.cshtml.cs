@@ -23,7 +23,19 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Recipes
 
         public async Task OnGetAsync()
         {
-            Recipe = await _context.Recipes.ToListAsync();
+            Recipe = await _context.Recipes.Take(15).ToListAsync();
+        }
+
+        public IActionResult OnPost()
+        {
+            var searchText = "%" + Request.Form["search-text"].First() + "%";
+
+            Recipe = _context
+                .Recipes
+                .Where(i => EF.Functions.Like(i.Name, searchText))
+                .ToList();
+
+            return Page();
         }
     }
 }

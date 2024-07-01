@@ -25,3 +25,9 @@ body {
 .logo {
     width: 200px;
 }
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2 !important;
+    border-color: #1861ac !important;
+    max-width: 150px;
+}

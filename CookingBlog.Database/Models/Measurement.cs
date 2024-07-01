@@ -13,5 +13,7 @@ namespace CookingBlog.Database.Models
         public string Name { get; set; } = null!;
 
         public string UnitName { get; set; } = null!;
+
+        public float ConversionRatio { get; set; }
     }
 }

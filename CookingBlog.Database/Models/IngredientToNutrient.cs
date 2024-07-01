@@ -11,7 +11,9 @@ public partial class IngredientToNutrient
 
     public Guid NutrientId { get; set; }
 
-    public bool IsEssential { get; set; }
+    public float NutrientAmount { get; set; }
+
+    public string NutrientMeasurement { get; set; } = null!;
 
     public virtual Ingredient Ingredient { get; set; } = null!;
 
