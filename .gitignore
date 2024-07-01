@@ -3,6 +3,8 @@
 *suo
 *cache
 *user
+*.dbmdl
+*.jfm
 
 ## build files
 **bin/
