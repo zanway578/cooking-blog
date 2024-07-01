@@ -39,7 +39,7 @@
     .step-number {
         border-radius: 100%;
         color: white;
-        background: #009933;
+        background: #81b742;
         padding: 2px 8px;
         margin-right: 3px;
         font-weight: 400;
@@ -52,7 +52,7 @@
     }
 
     .tag {
-        background: #009933;
+        background: #81b742;
         color: white;
         border-radius: 15px;
         padding: 3px 7px;
@@ -72,6 +72,12 @@
         border: 1px solid black;
         border-radius: 15px;
         padding: 5px;
+    }
+
+    .nutrition-info-container {
+        border: 2px solid #81b742;
+        border-radius: 5px;
+        padding: 10px;
     }
 </style>
 
@@ -199,7 +205,11 @@
                         }
                     </ol>
                 </div>
+                <div class="nutrition-info-container">
+                    <partial name="_NutritionFacts" model="@Model.NutritionInfo" />
+                </div>
             </div>
+            
         </div>
         <div class="col-lg-4 col-md-12">
             @if (Model.Author.Bio != null)

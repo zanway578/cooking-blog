@@ -3,6 +3,8 @@ using CookingBlog.Database.Models;
 using CookingBlog.Database.Models.Enums;
 using CookingBlog.Database.Models.Views;
 using CookingBlog.Database.Views;
+using CookingBlog.Web.Lib;
+using CookingBlog.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,8 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Recipes
         public List<RecipeStory> Story { get; set; }
 
         public IdentityApplicationUser Author { get; set; }
+
+        public NutritionInfoPerServing NutritionInfo { get; set; }
 
         public DateTime WrittenDate { get; set; }
 
@@ -82,6 +86,8 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Recipes
                     .Where(r => r.RecipeId == RecipeId && r.MediaCategory == MediaCategory.RecipeHeaderGallery)
                     .Select(r => r.FileName)
                     .FirstOrDefault();
+
+                NutritionInfo = new NutritionInformationCompiler(RecipeId, _ctx).CompileNutritionFacts();
 
                 if (fileName != null)
                 {
