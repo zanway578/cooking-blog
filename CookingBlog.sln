@@ -7,8 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBlog.Web", "CookingB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBlog.Database", "CookingBlog.Database\CookingBlog.Database.csproj", "{9B3C4D7E-070A-45F7-85C7-754FC08B0C14}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CookinBlog.Database.Setup", "CookinBlog.Database.Setup\CookinBlog.Database.Setup.sqlproj", "{E59348C7-E185-4825-83CF-46669DF15A76}"
-EndProject
+## Removing to avoid build
+#Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CookinBlog.Database.Setup", "CookinBlog.Database.Setup\CookinBlog.Database.Setup.sqlproj", "{E59348C7-E185-4825-83CF-46669DF15A76}"
+#EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
