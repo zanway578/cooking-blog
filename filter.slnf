@@ -1,9 +1,0 @@
-{
-  "solution": {
-    "path": "CookingBlog.sln",
-    "projects": [
-      "CookingBlog.Database\\CookingBlog.Database.csproj",
-      "CookingBlog.Web\\CookingBlog.Web.csproj"
-    ]
-  }
-}
