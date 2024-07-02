@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[nutrient] (
+    [ID]   UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    [Name] NVARCHAR (256)   NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    UNIQUE NONCLUSTERED ([Name] ASC)
+);
+

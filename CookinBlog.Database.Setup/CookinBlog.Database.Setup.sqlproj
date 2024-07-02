@@ -89,6 +89,10 @@
     <Build Include="dbo\Tables\recipe_media_to_sized_media.sql" />
     <Build Include="dbo\Views\v_recipe_preview.sql" />
     <Build Include="dbo\Views\v_ingredient_nutrient.sql" />
+    <Build Include="dbo\Views\v_ingredient_nutrient_per_hundred_grams.sql" />
+    <Build Include="dbo\Views\v_converted_recipe_group_ingredient.sql" />
+    <Build Include="dbo\Views\v_recipe_ingredient_and_nutrient_normalized.sql" />
+    <Build Include="dbo\Views\v_recipe_nutrition_value.sql" />
     <Build Include="dbo\Views\v_recipe_ingredient.sql" />
     <Build Include="dbo\Views\v_recipe_tag.sql" />
   </ItemGroup>
