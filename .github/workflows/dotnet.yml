@@ -21,8 +21,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Install Dependencies
-      run: cd CookingBlog.Web
-           dotnet add package Zanway578.Usda.Fdc.Api --version 1.0.0
+      run: cd CookingBlog.Web && dotnet add package Zanway578.Usda.Fdc.Api --version 1.0.0
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
