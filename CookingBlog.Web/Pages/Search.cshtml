@@ -2,3 +2,144 @@
 @model CookingBlog.Web.Pages.SearchModel
 @{
 }
+<style>
+    .show {
+        display: block;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .search-container {
+        background: white;
+        border-radius: 5px;
+        margin: 5px;
+    }
+
+    .select {
+        background: white;
+        border: solid 1px #81b742;
+        padding: 10px;
+        font-weight: bold;
+        width: 150px;
+        display: block;
+        text-align: center;
+        border-radius: 5px;
+        text-transform: uppercase;
+        margin: 5px;
+    }
+
+        .select-arrow {
+            content: "";
+            margin: 0 0.5em;
+            display: inline-block;
+            border: 7px solid transparent;
+            border-top: 8px solid gray;
+            border-bottom: 0 none;
+        }
+
+        .select:hover .select-arrow {
+            content: "";
+            margin: 0 0.5em;
+            display: inline-block;
+            border: 7px solid transparent;
+            border-top: 8px solid #81b742;
+            border-bottom: 0 none;
+        }
+
+    .select-options {
+        z-index: 999;
+        position: absolute;
+    }
+
+    .select-option {
+        background: #81b742;
+        color: white;
+        width: 150px;
+        margin-bottom: 2px;
+        border-radius: 5px;
+        padding: 10px 5px;
+        user-select: none;
+    }
+
+        .select-option:hover {
+            background: #63A924;
+        }
+
+    body {
+        background: #c4e39b;
+    }
+
+    footer {
+        background: white;
+    }
+</style>
+<form method="POST" class="search-background">
+    <div class="container search-container">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="select-container">
+                    <div class="select" onclick="toggle('dvTagSelect')">
+                        <span>Tags</span>
+                        <span class="select-arrow"></span>
+                    </div>
+                    <div id="dvTagSelect" class="select-options hide">
+                        @for (var i = 0; i < Model.TopTags.Length; i++)
+                        {
+                            var tagName = Model.TopTags[i].TagName;
+
+                            <div id="tag-container-@i" class="select-option">
+                                <input id="tag-@i" name="tag-@i" value="@tagName" type="checkbox" />
+                                <label>@tagName.ToLower()</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <input name="searchText" type="text" class="select" placeholder="Type in a recipe"  
+                    style="width: 100%;" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function addTagEventListeners() {
+        console.log("Adding listeners!");
+
+        @for (var i = 0; i < Model.TopTags.Length; i++)
+        {
+        @:document.getElementById("tag-container-@i").addEventListener("click", (e) => { toggleCheck(e, @i) } ) 
+        }
+    }
+
+    addTagEventListeners();
+
+    function toggle(id) {
+
+        let e = document.getElementById(id);
+
+        if (e.classList.contains("show")) {
+            e.classList.remove("show");
+            e.classList.add("hide");
+        }
+        else {
+            e.classList.remove("hide");
+            e.classList.add("show");
+        }
+    }
+
+    function toggleCheck(e, tagNumber) {
+        let id = e.target.id;
+
+        let checkboxId = `tag-${tagNumber}`;
+
+        let checkbox = document.getElementById(checkboxId);
+
+        // checkbox wasn't clicked, so we have to manually toggle value. Else we let the checkbox check itself
+        if (checkboxId !== id) {
+            checkbox.checked = !checkbox.checked;
+        }
+    }
+</script>

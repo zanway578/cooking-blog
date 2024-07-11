@@ -68,6 +68,8 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
 
     public virtual DbSet<VRecipeTag> VRecipeTags { get; set; }
 
+    public virtual DbSet<VTagRecipeCount> VTagRecipeCounts { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         optionsBuilder
            .UseSqlServer(GlobalConnectionString);
@@ -369,6 +371,12 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
         modelBuilder.Entity<VRecipeTag>(entity =>
         {
             entity.ToView("v_recipe_tag");
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<VTagRecipeCount>(entity =>
+        {
+            entity.ToView("v_tag_recipe_count");
             entity.HasNoKey();
         });
 
