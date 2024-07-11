@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Shared\_RecipePreviewExtended.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.1" />
@@ -29,10 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CookingBlog.Database\CookingBlog.Database.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Shared\_RecipePreviewExtended.cshtml" />
   </ItemGroup>
 
 </Project>

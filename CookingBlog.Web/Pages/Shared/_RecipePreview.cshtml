@@ -36,6 +36,6 @@
     <div class="img-container">
         <img src="/api/media/recipe/@Model.FileName" />
     </div>    
-    <a href="/recipe/@Model.Name/@Model.RecipeId">@Model.Name</a>
+    <a href="/recipe/@Model.Name.ToLower().Replace(" ", "-")/@Model.RecipeId">@Model.Name</a>
 
 </div>
