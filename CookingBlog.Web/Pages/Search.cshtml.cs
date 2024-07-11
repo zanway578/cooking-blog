@@ -76,7 +76,7 @@ namespace CookingBlog.Web.Pages
 
                 var matchingRecipeIds = _ctx
                     .VRecipeAggregatedTags
-                    .Where(t => t.AggregatedTags == searchString)
+                    .Where(t => t.AggregatedTags.Contains(searchString))
                     .Select(t => t.RecipeId)
                     .ToList();
 
@@ -84,7 +84,9 @@ namespace CookingBlog.Web.Pages
                     .Where(r => matchingRecipeIds.Contains(r.RecipeId));
             }
 
-            return results.ToList();
+            return results
+                .Take(20)
+                .ToList();
         }
     }
 }
