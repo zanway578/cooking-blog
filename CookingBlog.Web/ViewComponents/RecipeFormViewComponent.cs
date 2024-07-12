@@ -45,8 +45,7 @@ namespace CookingBlog.Web.ViewComponents
                 var prepTime = int.Parse(form["prep-time"].First() ?? "0");
                 var cookTime = int.Parse(form["cook-time"].First() ?? "0");
                 var numberServings = int.Parse(form["number-servings"].First() ?? "1");
-                // TODO: reinsert form flag
-                var recipeAvailable = false;//form["recipe-available"].First();
+                var recipeAvailable = form["recipe-available"].FirstOrDefault() != null;
 
                 recipeDataModel.Name = name;
                 recipeDataModel.Description = description;
