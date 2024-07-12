@@ -1,0 +1,234 @@
+﻿@model Models.RecipeData.RecipeDisplay
+<style>
+    .main-img {
+        max-width: 700px;
+        min-width: 375px;
+    }
+
+    .recipe-container {
+        border: black 3px solid;
+        padding: 15px;
+        border-radius: 20px;
+        max-width: 900px;
+    }
+
+    .prep-container {
+        padding-bottom: 5px;
+    }
+
+    .description {
+        font-size: 1.1rem;
+    }
+
+    .recipe-steps {
+        list-style: none;
+        padding-left: 0px;
+    }
+
+        .recipe-steps li {
+            margin-bottom: 3px;
+        }
+
+    .step-number {
+        border-radius: 100%;
+        color: white;
+        background: #81b742;
+        padding: 2px 8px;
+        margin-right: 3px;
+        font-weight: 400;
+        font-size: 0.9rem;
+    }
+
+    .tag-container {
+        max-width: 500px;
+        display: inline;
+    }
+
+    .tag {
+        background: #81b742;
+        color: white;
+        border-radius: 15px;
+        padding: 3px 7px;
+    }
+
+    .post-date {
+        display: inline;
+    }
+
+    .story-container p {
+        margin: 0px;
+        padding: 3px;
+    }
+
+    .bio-container {
+        background: #c4e39b;
+        border: 1px solid black;
+        border-radius: 15px;
+        padding: 5px;
+        margin-top: 4px;
+    }
+
+    .nutrition-info-container {
+        border: 2px solid #81b742;
+        border-radius: 5px;
+        padding: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1 class="recipe-header">@Model.Recipe.Name</h1>
+
+            <div>
+                @if (Model.MainImgUrl != null)
+                {
+                    <img class="main-img" src="@Model.MainImgUrl" />
+                }
+                <div>
+                    <b>Written by: </b><span>@Model.Author.FirstName @Model.Author.LastName</span>
+                </div>
+                <div>
+                    <div class="post-date">
+                        <b>Posted: </b><span>@Model.Recipe.CreatedTime.ToString("MM/dd/yyyy")</span>
+                    </div>
+                    @if (Model.Recipe.LastModifiedTime != null)
+                    {
+                        <div class="post-date">
+                            <b>Updated: </b><span>@Model.Recipe.LastModifiedTime.Value.ToString("MM/dd/yyyy")</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div style="padding: 5px 0px;">
+                @foreach (var tag in Model.Tags)
+                {
+                    <div class="tag-container">
+                        <span class="tag">@tag.TagName</span>
+                    </div>
+                }
+            </div>
+            <div class="story-container">
+                <h2>About this recipe</h2>
+                @foreach (var paragraph in Model.Story)
+                {
+                    <p>@paragraph.StoryText</p>
+                }
+            </div>
+            <div class="recipe-container">
+                <div>
+                    <h1>@Model.Recipe.Name</h1>
+                    <div class="prep-container">
+                        <b>Prep: </b><span>@Model.Recipe.PrepTime minutes</span>
+                        <b>Cook: </b><span>@Model.Recipe.CookTime minutes</span>
+                        <b>Total: </b><span>@(Model.Recipe.PrepTime + Model.Recipe.CookTime) minutes</span>
+                    </div>
+                    <div>
+                        <b>Number of Servings: </b><span>@Model.Recipe.NumberServings</span>
+                    </div>
+                    <div>
+                        <p class="description"><i>@Model.Recipe.Description</i></p>
+                    </div>
+                </div>
+                <div class="ingredients-container">
+                    @foreach (var ingredientGroup in Model.IngredientGroups)
+                    {
+                        if (Model.IngredientGroups.Count == 1)
+                        {
+                            <h2>Ingredients</h2>
+                        }
+                        else
+                        {
+                            <h2>Ingredients for @ingredientGroup.Key.Name</h2>
+                        }
+
+                        <ul>
+                            @foreach (var ingredient in ingredientGroup.Value)
+                            {
+                                // TODO: account for plurals
+                                if (ingredient.MeasurementAmountNumerator != null && ingredient.MeasurementAmountDenominator != null)
+                                {
+                                    <li>
+                                        @if (@ingredient.MeasurementAmount != 0)
+                                        {
+                                            <span>@ingredient.MeasurementAmount</span>
+                                        }
+                                        <span>@ingredient.MeasurementAmountNumerator/@ingredient.MeasurementAmountDenominator</span>
+
+                                        @ingredient.MeasurementUnitName @ingredient.IngredientName
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>@ingredient.MeasurementAmount @ingredient.MeasurementUnitName @ingredient.IngredientName</li>
+                                }
+
+                            }
+                        </ul>
+                    }
+                </div>
+                @foreach (var step in Model.StepGroups)
+                {
+                    if (Model.StepGroups.Count == 1)
+                    {
+                        <h2>Recipe Steps</h2>
+                    }
+                    else
+                    {
+                        <h2>Steps for @step.Key.Name</h2>
+                    }
+
+                    <ol class="recipe-steps">
+                        @{
+                            for (var i = 0; i < step.Value.Count; i++)
+                            {
+                                var recipeStep = step.Value[@i];
+                                <li><span class="step-number">@(i + 1)</span>@recipeStep.StepText</li>
+                            }
+                        }
+                    </ol>
+                }
+                <div>
+                    <h2>Notes</h2>
+                    <ol>
+                        @foreach (var note in Model.Notes)
+                        {
+                            <li>@note.NoteText</li>
+                        }
+                    </ol>
+                </div>
+                <div class="nutrition-info-container">
+                    <partial name="_NutritionFacts" model="@Model.NutritionInfo" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-4 col-md-12">
+            @if (Model.Author.Bio != null)
+            {
+                <div class="bio-container">
+                    <h2>About Me</h2>
+                    <p>
+                        Hi, I'm Cheryl a home cook with a passion for easy to prepare tasty dishes. You'll find an assortment of recipes here, from 30 minute week night meals to fancier items that are easy to make, but will make you look like a chef! All my meals are gluten free, and made with items you should be able to find at your local store. Let's get cooking!
+                    </p>
+                </div>
+            }
+            <div>
+                <div style="text-align: center;">
+                    <h2>More Recipes</h2>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        @foreach (var preview in Model.Previews)
+                        {
+                            <div class="col-lg-12 col-md-4 d-flex justify-content-center">
+                                <partial name="_RecipePreview" model="preview" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

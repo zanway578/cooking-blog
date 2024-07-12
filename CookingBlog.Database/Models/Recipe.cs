@@ -27,5 +27,7 @@ public partial class Recipe
 
     public int NumberServings { get; set; }
 
+    public string UrlId { get; set; } = null!;
+
     public virtual ICollection<RecipeMedia> RecipeToMedia { get; set; } = new List<RecipeMedia>();
 }

@@ -1,7 +1,7 @@
 ﻿using CookingBlog.Database;
 using CookingBlog.Database.Models;
 using CookingBlog.Web.Lib;
-using CookingBlog.Web.Models.Recipe;
+using CookingBlog.Web.Models.RecipeData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

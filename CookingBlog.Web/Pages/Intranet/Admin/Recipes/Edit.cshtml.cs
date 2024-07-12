@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CookingBlog.Database;
 using CookingBlog.Database.Models;
-using CookingBlog.Web.Models.Recipe;
+using CookingBlog.Web.Models.RecipeData;
 using Microsoft.AspNetCore.Identity;
 using CookingBlog.Web.Lib;
 using CookingBlog.Web.ViewComponents;

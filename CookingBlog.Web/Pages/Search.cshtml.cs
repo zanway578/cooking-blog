@@ -48,7 +48,7 @@ namespace CookingBlog.Web.Pages
 
             var results = _ctx
                 .VRecipePreviews
-                .Where(r => EF.Functions.Like(r.Name, recipeName));
+                .Where(r => r.IsPublished && EF.Functions.Like(r.Name, recipeName));
 
             // add where clauses
             for (var i = 0; i < NUM_TAGS; i++)

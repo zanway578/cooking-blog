@@ -1,0 +1,4 @@
+﻿@page "/recipe/{recipeName?}/{urlId}"
+@model CookingBlog.Web.Pages.RecipeModel
+
+@await Component.InvokeAsync("RecipeDisplay", Model.RecipeId)

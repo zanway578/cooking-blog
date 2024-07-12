@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CookingBlog.Database;
 using CookingBlog.Database.Models;
-using CookingBlog.Web.Models.Recipe;
+using CookingBlog.Web.Models.RecipeData;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.Net;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

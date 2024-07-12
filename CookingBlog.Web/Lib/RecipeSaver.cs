@@ -1,7 +1,7 @@
 ﻿using CookingBlog.Database;
 using CookingBlog.Database.Models;
 using CookingBlog.Database.Models.Enums;
-using CookingBlog.Web.Models.Recipe;
+using CookingBlog.Web.Models.RecipeData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Shared;
 using System.Security.Claims;
