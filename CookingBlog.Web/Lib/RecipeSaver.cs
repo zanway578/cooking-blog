@@ -2,6 +2,7 @@
 using CookingBlog.Database.Models;
 using CookingBlog.Database.Models.Enums;
 using CookingBlog.Web.Models.RecipeData;
+using CookingBlog.Web.Pages.Intranet.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Shared;
 using System.Security.Claims;
@@ -15,7 +16,7 @@ namespace CookingBlog.Web.Lib
         private readonly CookingBlogContext _ctx = ctx;
         private readonly UserManager<IdentityApplicationUser> _userManager = UserManager;
         private readonly ClaimsPrincipal _user = User;
-
+        private static Random _random = new Random();
 
         public void SaveRecipe()
         {
@@ -56,7 +57,8 @@ namespace CookingBlog.Web.Lib
                         IsPublished = _recipeDataModel.IsRecipeVisible,
                         CreatedById = new Guid(_userManager.GetUserId(_user)),
                         CreatedTime = DateTime.UtcNow,
-                        NumberServings = _recipeDataModel.NumberServings
+                        NumberServings = _recipeDataModel.NumberServings,
+                        UrlId = GenerateRandomRecipeUrlId()
                     };
 
                     _recipeId = newRecipe.Id;
@@ -152,6 +154,35 @@ namespace CookingBlog.Web.Lib
                 _ctx.Database.RollbackTransaction();
                 throw new Exception($"Save failed: {ex.Message}: {ex.InnerException?.Message ?? "No inner ex"}");
             }
+        }
+
+        private string GenerateRandomRecipeUrlId()
+        {
+            const string availableChars = "abcdefghijklmnopqrstuvwxyz" +
+                "0123456789";
+
+            var len = 8;
+
+            var isUnique = false;
+
+            string id = "";
+
+            while (!isUnique)
+            {
+                id = "";
+
+                for (var i = 0; i < len; i++)
+                {
+                    id += availableChars[_random.Next(availableChars.Length)];
+                }
+
+                isUnique = !_ctx
+                    .Recipes
+                    .Where(r => r.UrlId == id)
+                    .Any();
+            }
+
+            return id;
         }
 
         private void AddMedia()

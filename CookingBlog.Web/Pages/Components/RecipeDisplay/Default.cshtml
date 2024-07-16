@@ -198,9 +198,12 @@
                         }
                     </ol>
                 </div>
-                <div class="nutrition-info-container">
-                    <partial name="_NutritionFacts" model="@Model.NutritionInfo" />
-                </div>
+                @if (Model.NutritionInfo != null)
+                {
+                    <div class="nutrition-info-container">
+                        <partial name="_NutritionFacts" model="@Model.NutritionInfo" />
+                    </div>
+                }
             </div>
 
         </div>

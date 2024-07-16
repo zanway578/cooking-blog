@@ -1,0 +1,36 @@
+﻿@page "/sitemap.xml"
+@using CookingBlog.Database
+@using CookingBlog.Web.Models
+@using Microsoft.AspNetCore.Http
+@inject CookingBlogContext ctx
+@{
+    var pages = ctx
+        .Recipes
+        .Where(r => r.IsPublished)
+        .Select(r => new SitemapNode
+        {
+            Url = $"/recipe/{r.Name.Replace(' ', '-').ToLower()}/{r.UrlId}",
+            LastUpdated = r.LastModifiedTime ?? r.CreatedTime
+        })
+        .ToList();
+
+    pages.Add(new SitemapNode
+        {
+            Url = "/search",
+            LastUpdated = DateTime.Now
+        });
+
+    Layout = null;
+    Response.ContentType = "text/xml";
+    await Response.WriteAsync("<?xml version='1.0' encoding='UTF-8' ?>");
+}
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    @foreach (var sitePage in pages)
+    {
+        <url>
+            <loc>https://@Request.Host@sitePage.Url</loc>
+            <lastmod>@sitePage.LastUpdated.ToString("yyyy-MM-dd")</lastmod>
+        </url>
+    }
+</urlset>

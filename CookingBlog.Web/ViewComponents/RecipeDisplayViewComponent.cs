@@ -53,7 +53,14 @@ namespace CookingBlog.Web.ViewComponents
                 .Select(r => r.FileName)
                 .FirstOrDefault();
 
-            result.NutritionInfo = new NutritionInformationCompiler(recipeId, _ctx).CompileNutritionFacts();
+            try
+            {
+                result.NutritionInfo = new NutritionInformationCompiler(recipeId, _ctx).CompileNutritionFacts();
+            }
+            catch
+            {
+                result.NutritionInfo = null;
+            }
 
             if (fileName != null)
             {
