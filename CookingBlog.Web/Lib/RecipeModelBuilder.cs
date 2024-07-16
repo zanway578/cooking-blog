@@ -35,6 +35,7 @@ namespace CookingBlog.Web.Lib
                 recipeDataModel.Tags = GetTags();
                 recipeDataModel.Notes = GetNotes();
                 recipeDataModel.Story = GetStory();
+                recipeDataModel.IsRecipeVisible = recipe.IsPublished;
             }
 
             return recipeDataModel;

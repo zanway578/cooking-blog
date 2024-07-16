@@ -67,10 +67,18 @@ namespace CookingBlog.Web.ViewComponents
                 result.MainImgUrl = $"/api/media/recipe-header-gallery/{fileName}";
             }
 
+            var previewIds = _ctx
+                .VRecipeToRecipeTagMatchCounts
+                .Where(r => r.RecipeId == recipeId)
+                .OrderByDescending(r => r.TagsInCommon)
+                .Select(r => r.ComparedRecipeId)
+                .Take(3)
+                .ToList();
+
             result.Previews = _ctx
                 .VRecipePreviews
-                .Where(p => p.RecipeId != recipeId && p.IsPublished)
-                .Take(3)
+                .Where(p => previewIds.Contains(p.RecipeId))
+
                 .ToList();
 
             return View(result);

@@ -221,6 +221,10 @@
                 <div style="text-align: center;">
                     <h2>More Recipes</h2>
                 </div>
+                @if(!Model.Recipe.IsPublished)
+                {
+                    <p>Your recipe must be published for the suggested recipes to load.</p>
+                }
                 <div class="container-fluid">
                     <div class="row">
                         @foreach (var preview in Model.Previews)
