@@ -1,43 +1,43 @@
 ﻿@using CookingBlog.Web.Models
 @model NutritionInfoPerServing
 
-<style>
+@if (Model != null)
+{
+    <h2>Approximate Nutrition Info</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <b>Serving Size: </b><span>1 Serving</span>
+            </div>
+            <div class="col-md-4">
+                <b>Calories: </b><span>@Model.Calories</span>
+            </div>
+            <div class="col-md-3">
+                <b>Protein: </b><span>@Model.GramsProtein</span><span>g</span>
+            </div>     
+        </div>
+        <div class="row">
+            <div class="col-md-5 ">
+                <b>Net Carbs: </b><span>@Model.GramsTotalCarb</span><span>g</span>
+            </div>
+            <div class="col-md-4">
+                <b>Sugar: </b><span>@Model.GramsTotalSugar</span><span>g</span>
+            </div>
+            <div class="col-md-3">
+                <b>Fat: </b><span>@Model.GramsTotalFat</span><span>g</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <b>Sodium: </b><span>@Model.MilligramsSodium</span><span>mg</span>
+            </div>
+            <div class="col-md-4">
+                <b>Cholesterol: </b><span>@Model.MilligramsCholesterol</span><span>mg</span>
+            </div>
+            <div class="col-md-3">
+                <b>Fiber: </b><span>@Model.GramsFiber</span><span>g</span>
+            </div>
+        </div>
 
-</style>
-<h2>Approximate Nutrition Info</h2>
-<div class="container">
-    <div class="row">
-        <div class="col-md-5">
-            <b>Serving Size: </b><span>1 Serving</span>
-        </div>
-        <div class="col-md-4">
-            <b>Calories: </b><span>@Model.Calories</span>
-        </div>
-        <div class="col-md-3">
-            <b>Protein: </b><span>@Model.GramsProtein</span><span>g</span>
-        </div>     
     </div>
-    <div class="row">
-        <div class="col-md-5 ">
-            <b>Net Carbs: </b><span>@Model.GramsTotalCarb</span><span>g</span>
-        </div>
-        <div class="col-md-4">
-            <b>Sugar: </b><span>@Model.GramsTotalSugar</span><span>g</span>
-        </div>
-        <div class="col-md-3">
-            <b>Fat: </b><span>@Model.GramsTotalFat</span><span>g</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <b>Sodium: </b><span>@Model.MilligramsSodium</span><span>mg</span>
-        </div>
-        <div class="col-md-4">
-            <b>Cholesterol: </b><span>@Model.MilligramsCholesterol</span><span>mg</span>
-        </div>
-        <div class="col-md-3">
-            <b>Fiber: </b><span>@Model.GramsFiber</span><span>g</span>
-        </div>
-    </div>
-    
-</div>
+}

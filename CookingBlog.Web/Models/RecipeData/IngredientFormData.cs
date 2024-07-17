@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
-namespace CookingBlog.Web.Models.Recipe
+namespace CookingBlog.Web.Models.RecipeData
 {
     public class IngredientFormData
     {

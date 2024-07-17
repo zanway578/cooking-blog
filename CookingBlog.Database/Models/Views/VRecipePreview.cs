@@ -10,6 +10,8 @@
 
         public string? FileName { get; set; }
 
+        public string UrlId { get; set; } = null!;
+
         public bool IsPublished { get; set; }
     }
 }

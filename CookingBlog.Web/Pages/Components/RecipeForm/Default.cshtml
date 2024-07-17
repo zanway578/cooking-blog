@@ -1,4 +1,4 @@
-﻿@model Models.Recipe.RecipeForm
+﻿@model Models.RecipeData.RecipeForm
 <style>
     .recipe-step {
         padding: 5px;
@@ -278,7 +278,7 @@
             </p>
         </div>
         <div>
-            <input type="checkbox" id="recipe-available" name="recipe-available" value="checkPublish" />
+            <input type="checkbox" id="recipe-available" name="recipe-available" value="checkPublish" checked="@Model.RecipeDataModel.IsRecipeVisible" />
         </div>
     </div>
     <div>

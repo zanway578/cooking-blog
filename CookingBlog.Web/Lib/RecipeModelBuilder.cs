@@ -1,6 +1,6 @@
 ﻿using CookingBlog.Database;
 using CookingBlog.Database.Models;
-using CookingBlog.Web.Models.Recipe;
+using CookingBlog.Web.Models.RecipeData;
 using System.Runtime.CompilerServices;
 
 namespace CookingBlog.Web.Lib
@@ -35,6 +35,7 @@ namespace CookingBlog.Web.Lib
                 recipeDataModel.Tags = GetTags();
                 recipeDataModel.Notes = GetNotes();
                 recipeDataModel.Story = GetStory();
+                recipeDataModel.IsRecipeVisible = recipe.IsPublished;
             }
 
             return recipeDataModel;

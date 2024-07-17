@@ -4,7 +4,7 @@
     {
         public string Name { get; set; } = "";
 
-        public int CaloriesInOneHundredGrams { get; set; } = 0;
+        public int CaloriesInOneHundredGrams { get; set; } = 1;
 
         public int? NumberGramsInACup { get; set; }
 

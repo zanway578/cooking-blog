@@ -60,6 +60,8 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
 
     public virtual DbSet<VIngredientNutrient> VIngredientNutrients { get; set; }
 
+    public virtual DbSet<VRecipeAggregatedTag> VRecipeAggregatedTags { get; set; }
+
     public virtual DbSet<VRecipeGroupIngredient> VRecipeGroupIngredients { get; set; }
 
     public virtual DbSet<VRecipeNutritionValue> VRecipeNutritionValues { get; set; }
@@ -67,6 +69,11 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
     public virtual DbSet<VRecipePreview> VRecipePreviews { get; set; }
 
     public virtual DbSet<VRecipeTag> VRecipeTags { get; set; }
+
+    public virtual DbSet<VRecipeToRecipeTagMatchCount> VRecipeToRecipeTagMatchCounts { get; set; }
+
+    public virtual DbSet<VTagRecipeCount> VTagRecipeCounts { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         optionsBuilder
@@ -348,6 +355,12 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
             entity.HasNoKey();
         });
 
+        modelBuilder.Entity<VRecipeAggregatedTag>(entity =>
+        {
+            entity.ToView("v_recipe_aggregated_tag");
+            entity.HasNoKey();
+        });
+
         modelBuilder.Entity<VRecipeGroupIngredient>(entity =>
         {
             entity.ToView("v_recipe_ingredient");
@@ -369,6 +382,18 @@ public partial class CookingBlogContext : IdentityDbContext<IdentityApplicationU
         modelBuilder.Entity<VRecipeTag>(entity =>
         {
             entity.ToView("v_recipe_tag");
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<VRecipeToRecipeTagMatchCount>(entity =>
+        {
+            entity.ToView("v_recipe_to_recipe_tag_match_count");
+            entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<VTagRecipeCount>(entity =>
+        {
+            entity.ToView("v_tag_recipe_count");
             entity.HasNoKey();
         });
 

@@ -31,3 +31,13 @@ body {
     border-color: #1861ac !important;
     max-width: 150px;
 }
+
+.header-tab {
+    text-decoration: none;
+    color: black !important;
+    font-weight: bold;
+}
+
+    .header-tab:hover {
+        color: #63A924 !important;
+    }

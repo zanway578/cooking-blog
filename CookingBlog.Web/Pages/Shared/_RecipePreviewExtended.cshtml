@@ -10,18 +10,19 @@
         /* box-shadow: -10px 10px #F0F1F0; */
         margin: 10px;
         padding: 5px;
-        width: 250px;
+        width: 300px;
         text-align: center;
+        box-shadow: 5px 5px;
     }
 
         .recipe-preview .img-container {
             text-align: center;
+
         }
 
         .recipe-preview img {
             width: 50%;
-           text-align: center;
-
+            text-align: center;
         }
 
         .recipe-preview a {
@@ -30,12 +31,11 @@
             font-size: 1.2em;
             text-decoration: none;
         }
-    
 </style>
 <div class="recipe-preview">
     <div class="img-container">
         <img src="/api/media/recipe/@Model.FileName" />
-    </div>    
+    </div>
     <a href="/recipe/@Model.Name.ToLower().Replace(" ", "-")/@Model.UrlId">@Model.Name</a>
-
+    <p>@Model.Description</p>
 </div>

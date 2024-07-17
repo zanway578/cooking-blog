@@ -23,7 +23,10 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
 
         public async Task OnGetAsync()
         {
-            Ingredient = await _context.Ingredients.Take(15).ToListAsync();
+            Ingredient = await _context
+                .Ingredients
+                .OrderBy(i => i.Name)
+                .ToListAsync();
         }
 
         public IActionResult OnPost()
@@ -33,6 +36,7 @@ namespace CookingBlog.Web.Pages.Intranet.Admin.Ingredients
             Ingredient = _context
                 .Ingredients
                 .Where(i => EF.Functions.Like(i.Name, searchText))
+                .OrderBy(i => i.Name)
                 .ToList();
 
             return Page();

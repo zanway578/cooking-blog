@@ -62,7 +62,27 @@ namespace CookingBlog.Web.API
                 var filteredResults = results
                     .FoodNutrients
                     .Where(r => r.Amount > 0)
-                    .OrderBy(r => r.Name);
+                    .OrderBy(r => r.Name)
+                    .ToList();
+
+                var exists = filteredResults
+                    .Where(r => r.UnitName == "KCAL" && r.Name == "Energy")
+                    .FirstOrDefault();
+
+                if (exists == null)
+                {
+                    filteredResults.Add(new AbridgedFoodNutrient
+                    {
+                        Number = "19512",
+                        Name = "Energy",
+                        Amount = 1,
+                        UnitName = "kCal"
+                    });
+                }
+                else if (exists.Amount == 0)
+                {
+                    exists.Amount = 1;
+                }
 
                 return filteredResults;
             }
