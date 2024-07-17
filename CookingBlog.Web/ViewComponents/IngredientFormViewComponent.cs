@@ -43,7 +43,7 @@ namespace CookingBlog.Web.ViewComponents
                 };
             }
 
-            return View(model);
+            return View("~/Pages/Components/IngredientForm.cshtml", model);
         }
 
         public static IngredientFormData BuildFormModel(IFormCollection form)

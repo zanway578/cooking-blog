@@ -1,0 +1,6 @@
+﻿@page "/recipe-print/{recipeName?}/{urlId}"
+@{
+    Layout = "_PrintLayout";
+}
+@model CookingBlog.Web.Pages.RecipePrintModel
+@await Component.InvokeAsync("RecipeDisplayPrint", Model.RecipeId)

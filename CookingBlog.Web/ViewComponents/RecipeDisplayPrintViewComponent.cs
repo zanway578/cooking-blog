@@ -1,14 +1,14 @@
-﻿using CookingBlog.Database.Models.Enums;
+﻿using CookingBlog.Database;
+using CookingBlog.Database.Models.Enums;
+using CookingBlog.Database.Models.Views;
 using CookingBlog.Database.Models;
 using CookingBlog.Web.Lib;
-using Microsoft.AspNetCore.Mvc;
 using CookingBlog.Web.Models.RecipeData;
-using CookingBlog.Database;
-using CookingBlog.Database.Models.Views;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CookingBlog.Web.ViewComponents
 {
-    public class RecipeDisplayViewComponent(CookingBlogContext ctx) : ViewComponent
+    public class RecipeDisplayPrintViewComponent(CookingBlogContext ctx) : ViewComponent
     {
         private readonly CookingBlogContext _ctx = ctx;
         private RecipeDisplay result = new RecipeDisplay();
@@ -80,7 +80,7 @@ namespace CookingBlog.Web.ViewComponents
                 .Where(p => previewIds.Contains(p.RecipeId))
                 .ToList();
 
-            return View("~/Pages/Components/RecipeDisplay.cshtml", result);
+            return View("~/Pages/Components/RecipeDisplayPrint.cshtml", result);
         }
 
         private void BindSteps()

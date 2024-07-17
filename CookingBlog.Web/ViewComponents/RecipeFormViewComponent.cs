@@ -31,7 +31,7 @@ namespace CookingBlog.Web.ViewComponents
             model.RecipeDataModel = new RecipeModelBuilder(recipeId, Context).BuildRecipe();
             model.RecipeId = recipeId;
 
-            return View(model);
+            return View("~/Pages/Components/RecipeForm.cshtml", model);
         }
 
         public static RecipeFormData BuildFormModel(IFormCollection form, CookingBlogContext ctx)

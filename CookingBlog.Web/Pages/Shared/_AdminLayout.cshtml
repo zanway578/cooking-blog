@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using CookingBlog.Web.Models
+@using Microsoft.Extensions.Options
+@inject IOptions<CookingBlogSettings> settings
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -39,7 +42,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year - Doable Dish
+            &copy; @DateTime.Now.Year - @settings.Value.SiteName
         </div>
     </footer>
 

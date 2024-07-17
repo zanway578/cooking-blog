@@ -1,4 +1,5 @@
-﻿@page "/recipe/{recipeName?}/{urlId}"
+﻿@page "/recipe/{recipeName}/{urlId}"
 @model CookingBlog.Web.Pages.RecipeModel
+<a href="/recipe-print/@Model.RecipeName/@Model.UrlId">Print</a>
 
 @await Component.InvokeAsync("RecipeDisplay", Model.RecipeId)
